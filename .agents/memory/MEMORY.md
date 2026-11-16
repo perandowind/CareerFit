@@ -1,0 +1,16 @@
+- [OpenAI gpt-5.6-luna 파라미터 제약](openai-model-constraints.md) — `temperature`(비기본값)·`max_tokens` 미지원, `max_completion_tokens`만 사용할 것
+- [TS 프로젝트 참조와 stale 선언](stale-db-dist-types.md) — `tsc -p --noEmit`만 도는 typecheck는 참조 프로젝트의 오래된 선언으로 거짓 오류 가능; 참조를 먼저 `tsc -b`로 빌드할 것
+- [Ollama 취소된 pull 정리](ollama-partial-blob-cleanup.md) — partial blob은 API로 못 지움; OLLAMA_MODELS 경로 공유 + blobs 디렉터리 쓰기 권한(ACL/그룹)이 전제
+- [관리자 화면 흐름 검증 방법](admin-flow-verification.md) — 완료 리뷰는 UI 실행 증거 요구; 임시 admin 해시 + 가짜 Ollama + vitest 통합 테스트 패턴
+- [실제 Ollama 스모크 테스트 방법](real-ollama-smoke.md) — Replit에서 진짜 Ollama 바이너리로 pull/취소/삭제 검증 가능; 백그라운드 프로세스는 ShellExec 세션과 함께 죽으니 한 세션 안에서 실행
+- [VM 설치 스크립트 검증 방법](vm-install-validation.md) — Replit에서 docker+systemd 컨테이너로 install.sh 실검증 가능; libc6/postgres 함정과 psql_as_postgres 헬퍼 규칙
+- [로컬/온프렘 배포 함정](local-deploy-gotchas.md) — Docker는 Debian(slim)만 가능(musl 바이너리 제외됨); 세션 쿠키는 secure:"auto"+X-Forwarded-Proto 패스스루 유지
+- [SSRF 가드 패턴](ssrf-guard-pattern.md) — 사용자 URL fetch는 safe-fetch.ts 재사용; 16진 IPv4-매핑 IPv6·DNS 리바인딩까지 막아야 리뷰 통과
+- [채용 사이트 공고 본문 수집](job-portal-detail-pages.md) — 사람인/잡코리아 본문은 별도 상세 URL에 있음; 겉 페이지 내비 텍스트가 길이 휴리스틱을 속이므로 상세 페이지를 무조건 우선할 것
+- [api-server 통합 테스트 패턴](api-server-test-mocks.md) — admin 라우터를 vitest에서 직접 띄우는 법: db/미들웨어/openai 모듈 mock + 가짜 Ollama(11434) + 레지스트리 fetch stub
+- [심사 한도·특권 안전성](analysis-quota-entitlements.md) — 무제한 권한은 구독과 분리하고, 월 리셋·차감은 행 잠금 단일 트랜잭션으로 처리
+- [OpenAPI 바이너리 업로드 코드 생성](openapi-binary-upload-codegen.md) — multipart binary는 클라이언트 Blob·서버 Zod File을 생성하므로 공유 타입 빌드에 DOM 타입이 필요
+- [다중 서버 운영 집계 시각](multi-instance-operational-clock.md) — 공유 집계의 기록·구간·쿨다운·표시 시각은 한 트랜잭션에서 얻은 PostgreSQL 시각을 함께 사용할 것
+- [운영 모니터 스키마 배포](monitor-schema-rollout.md) — 모니터용 DB 테이블도 API 시작과 CI에서 같은 재실행 가능 마이그레이션을 먼저 적용할 것
+- [고부하 운영 카운터](high-volume-monitor-counters.md) — 고정 버킷도 단일 행·긴 트랜잭션이면 병목; 제한된 샤드와 짧은 원자 업서트로 설계
+- [아웃박스 원자성과 claim 소유권](outbox-claim-ownership.md) — 알림 선점·저장은 한 트랜잭션, 재할당 작업 완료는 claim 토큰까지 일치
